@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.centered {
+  margin-top: 15%;
+}
+.hidden {
+  display: none;
+}
+#wheelContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 40px auto;
+}
+#ferrisWheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: spinReal 5s ease-in-out infinite;
+  transform-origin: center;
+}
+.gondola {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+  font-size: 24px;
+}
+.gondola:nth-child(1) { top: 0; left: 125px; }
+.gondola:nth-child(2) { top: 60px; right: 0; }
+.gondola:nth-child(3) { bottom: 0; left: 125px; }
+.gondola:nth-child(4) { bottom: 60px; left: 0; }
+.gondola:nth-child(5) { top: 125px; left: 125px; }
+
+@keyframes spinReal {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

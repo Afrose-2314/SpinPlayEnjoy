@@ -27,7 +27,7 @@ function submitGuess() {
   if (val === answer) {
     score++;
     document.getElementById("result").innerText = "🎉 Correct!";
-    document.getElementById("score").innerText = score;
+   
   } else if (val < answer) {
     document.getElementById("result").innerText = "🔼 Too low!";
   } else {

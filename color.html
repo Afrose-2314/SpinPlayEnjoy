@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><title>Color Match</title></head>
+<body><h2>Game: Color Match</h2>
+<p>Click the color that matches the name!</p>
+<h3 id="colorName" style="font-size: 32px;"></h3>
+<div id="buttons"></div><p id="feedback"></p>
+<script>
+const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+function generateColor() {
+  const correct = colors[Math.floor(Math.random() * colors.length)];
+  document.getElementById("colorName").innerText = correct;
+  const shuffled = [...colors].sort(() => 0.5 - Math.random());
+  const btns = shuffled.map(color =>
+    `<button onclick="check('${color}', '${correct}')" style="margin: 10px; padding: 10px 20px; background:${color.toLowerCase()};color:white;border:none;border-radius:5px;">${color}</button>`
+  ).join("");
+  document.getElementById("buttons").innerHTML = btns;
+  document.getElementById("feedback").innerText = '';
+}
+function check(selected, correct) {
+  document.getElementById("feedback").innerText =
+    selected === correct ? "✅ Correct!" : "❌ Wrong!";
+  setTimeout(generateColor, 1000);
+}
+window.onload = generateColor;
+</script></body></html>

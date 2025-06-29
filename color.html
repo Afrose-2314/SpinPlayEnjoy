@@ -3,29 +3,61 @@
 <head><title>Color Match</title></head>
 <body>
   <h2>Game: Color Match</h2>
-  <p>Click the color that matches the name!</p>
+  <p>Click the color that matches the name shown:</p>
   <h3 id="colorName" style="font-size: 32px;"></h3>
   <div id="buttons"></div>
   <p id="feedback"></p>
+  <p>Score: <span id="score">0</span></p>
+  <p>Time Left: <span id="time">60</span> seconds</p>
 
 <script>
 const colors = ["Red", "Blue", "Green", "Yellow", "Purple"];
+let correctColor = "", score = 0, timeLeft = 60, gameActive = true;
+
 function generateColor() {
-  const correct = colors[Math.floor(Math.random() * colors.length)];
-  document.getElementById("colorName").innerText = correct;
-  const shuffled = [...colors].sort(() => 0.5 - Math.random());
-  const btns = shuffled.map(color =>
-    <button onclick="check('${color}', '${correct}')" style="margin: 10px; padding: 10px 20px; background:${color.toLowerCase()};color:white;border:none;border-radius:5px;">${color}</button>
+  if (!gameActive) return;
+  correctColor = colors[Math.floor(Math.random() * colors.length)];
+  document.getElementById("colorName").innerText = correctColor;
+  
+  const shuffled = [...colors].sort(() => Math.random() - 0.5);
+  const buttonsHTML = shuffled.map(color =>
+    <button onclick="check('${color}')" style="margin: 10px; padding: 10px 20px; background:${color.toLowerCase()};color:white;border:none;border-radius:5px;">${color}</button>
   ).join("");
-  document.getElementById("buttons").innerHTML = btns;
-  document.getElementById("feedback").innerText = '';
+  
+  document.getElementById("buttons").innerHTML = buttonsHTML;
+  document.getElementById("feedback").innerText = "";
 }
-function check(selected, correct) {
-  document.getElementById("feedback").innerText =
-    selected === correct ? "✅ Correct!" : "❌ Wrong!";
-  setTimeout(generateColor, 1000);
+
+function check(selected) {
+  if (!gameActive) return;
+  if (selected === correctColor) {
+    score++;
+    document.getElementById("feedback").innerText = "✅ Correct!";
+  } else {
+    document.getElementById("feedback").innerText = "❌ Wrong!";
+  }
+  document.getElementById("score").innerText = score;
+  generateColor();
 }
-window.onload = generateColor;
+
+function startTimer() {
+  const timer = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      document.getElementById("time").innerText = timeLeft;
+    } else {
+      clearInterval(timer);
+      gameActive = false;
+      document.getElementById("feedback").innerText = "⏰ Time's up!";
+      document.getElementById("buttons").innerHTML = "";
+    }
+  }, 1000);
+}
+
+window.onload = () => {
+  generateColor();
+  startTimer();
+};
 </script>
 </body>
 </html>
